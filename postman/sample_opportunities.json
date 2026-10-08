@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Autonomous Drone Swarm Coordination in GPS-Denied Tunnels",
+    "description": "Investigating distributed consensus algorithms and visual-inertial SLAM for autonomous UAV swarms operating in subterranean environments without GPS availability.",
+    "research_area": "Robotics & Autonomous Systems",
+    "faculty_name": "Dr. Sarah Chen",
+    "department": "Computer Science & Engineering",
+    "required_skills": "ROS2, C++, Python, OpenCV, Linear Algebra",
+    "available_positions": 3,
+    "application_deadline": "2026-11-30",
+    "status": "Open"
+  },
+  {
+    "title": "Deep Learning for 3D Cardiac MRI Anomaly Segmentation",
+    "description": "Developing hybrid vision transformer and convolutional networks for automated volumetric segmentation and real-time arrhythmia lesion detection from 3D MRI scans.",
+    "research_area": "Biomedical AI & Computer Vision",
+    "faculty_name": "Prof. Elena Rostova",
+    "department": "Biomedical Engineering",
+    "required_skills": "PyTorch, Python, NumPy, Medical Imaging, CUDA",
+    "available_positions": 2,
+    "application_deadline": "2026-12-15",
+    "status": "Open"
+  },
+  {
+    "title": "Quantum Error Correction Code Simulation on NISQ Devices",
+    "description": "Benchmarking surface code and bosonic error correction fidelity against thermal and dephasing noise on simulated superconducting qubit architectures.",
+    "research_area": "Quantum Information Science",
+    "faculty_name": "Dr. Marcus Vance",
+    "department": "Physics & Computer Science",
+    "required_skills": "Qiskit, Python, Quantum Mechanics, Probability",
+    "available_positions": 1,
+    "application_deadline": "2026-10-31",
+    "status": "Open"
+  },
+  {
+    "title": "Zero-Trust Microsegmentation for Cloud-Native Kubernetes Clusters",
+    "description": "Analyzing eBPF-based network telemetry to dynamically generate and enforce fine-grained ingress/egress firewall policies across container pods.",
+    "research_area": "Network & Cloud Security",
+    "faculty_name": "Dr. Tariq Al-Mansoor",
+    "department": "Information Security",
+    "required_skills": "Go, eBPF, Kubernetes, Linux Kernel, Wireshark",
+    "available_positions": 2,
+    "application_deadline": "2026-12-05",
+    "status": "Open"
+  },
+  {
+    "title": "Perovskite Tandem Solar Cell Degradation Modeling",
+    "description": "Simulating ion migration and environmental moisture degradation mechanisms in multi-junction perovskite-silicon solar cells under accelerated thermal cycling.",
+    "research_area": "Renewable Energy & Materials Science",
+    "faculty_name": "Prof. Claire Beauchamp",
+    "department": "Materials Science & Engineering",
+    "required_skills": "COMSOL, Python, Finite Element Analysis, Solid State Physics",
+    "available_positions": 2,
+    "application_deadline": "2026-11-20",
+    "status": "Closed"
+  }
+]

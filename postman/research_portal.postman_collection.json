@@ -1,0 +1,464 @@
+{
+  "info": {
+    "_postman_id": "7f8b9c1d-63e2-45a8-9d21-f4d1a3b89012",
+    "name": "Research Opportunity Portal - Assignment Tests",
+    "description": "Complete Postman testing suite covering all CRUD operations, state transitions, validation, and error codes for the university Research Opportunity Portal assignment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "opportunity_id",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Create Research Opportunity #1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201 Created\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Response contains created opportunity with ID\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('id');",
+              "    pm.expect(jsonData.title).to.eql(\"Autonomous Drone Swarm Coordination in GPS-Denied Tunnels\");",
+              "    pm.expect(jsonData.status).to.eql(\"Open\");",
+              "    pm.collectionVariables.set(\"opportunity_id\", jsonData.id);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Autonomous Drone Swarm Coordination in GPS-Denied Tunnels\",\n  \"description\": \"Investigating distributed consensus algorithms and visual-inertial SLAM for autonomous UAV swarms operating in subterranean environments without GPS availability.\",\n  \"research_area\": \"Robotics & Autonomous Systems\",\n  \"faculty_name\": \"Dr. Sarah Chen\",\n  \"department\": \"Computer Science & Engineering\",\n  \"required_skills\": \"ROS2, C++, Python, OpenCV, Linear Algebra\",\n  \"available_positions\": 3,\n  \"application_deadline\": \"2026-11-30\",\n  \"status\": \"Open\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/opportunities",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "opportunities"
+          ]
+        },
+        "description": "Demonstrates creating research opportunity #1. Saves generated ID to collection variable {{opportunity_id}}."
+      },
+      "response": []
+    },
+    {
+      "name": "2. Create Research Opportunity #2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201 Created\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Created Opportunity #2 verified\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.id).to.be.a('number');",
+              "    pm.expect(jsonData.faculty_name).to.eql(\"Prof. Elena Rostova\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Deep Learning for 3D Cardiac MRI Anomaly Segmentation\",\n  \"description\": \"Developing hybrid vision transformer and convolutional networks for automated volumetric segmentation and real-time arrhythmia lesion detection from 3D MRI scans.\",\n  \"research_area\": \"Biomedical AI & Computer Vision\",\n  \"faculty_name\": \"Prof. Elena Rostova\",\n  \"department\": \"Biomedical Engineering\",\n  \"required_skills\": \"PyTorch, Python, NumPy, Medical Imaging, CUDA\",\n  \"available_positions\": 2,\n  \"application_deadline\": \"2026-12-15\",\n  \"status\": \"Open\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/opportunities",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "opportunities"
+          ]
+        },
+        "description": "Demonstrates creating research opportunity #2."
+      },
+      "response": []
+    },
+    {
+      "name": "3. Create Research Opportunity #3",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201 Created\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Created Opportunity #3 verified\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.id).to.be.a('number');",
+              "    pm.expect(jsonData.status).to.eql(\"Open\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Quantum Error Correction Code Simulation on NISQ Devices\",\n  \"description\": \"Benchmarking surface code and bosonic error correction fidelity against thermal and dephasing noise on simulated superconducting qubit architectures.\",\n  \"research_area\": \"Quantum Information Science\",\n  \"faculty_name\": \"Dr. Marcus Vance\",\n  \"department\": \"Physics & Computer Science\",\n  \"required_skills\": \"Qiskit, Python, Quantum Mechanics, Probability\",\n  \"available_positions\": 1,\n  \"application_deadline\": \"2026-10-31\",\n  \"status\": \"Open\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/opportunities",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "opportunities"
+          ]
+        },
+        "description": "Demonstrates creating research opportunity #3."
+      },
+      "response": []
+    },
+    {
+      "name": "4. Retrieve All Opportunities",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Returns non-empty array of opportunities\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "    pm.expect(jsonData.length).to.be.at.least(3);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/opportunities",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "opportunities"
+          ]
+        },
+        "description": "Retrieves list of all opportunities stored in MySQL database."
+      },
+      "response": []
+    },
+    {
+      "name": "5. Retrieve One Opportunity by ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Returns the requested opportunity matching ID\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    var expectedId = parseInt(pm.collectionVariables.get(\"opportunity_id\"));",
+              "    pm.expect(jsonData.id).to.eql(expectedId);",
+              "    pm.expect(jsonData).to.have.property('title');",
+              "    pm.expect(jsonData).to.have.property('required_skills');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/opportunities/{{opportunity_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "opportunities",
+            "{{opportunity_id}}"
+          ]
+        },
+        "description": "Retrieves single research opportunity using the dynamic variable {{opportunity_id}}."
+      },
+      "response": []
+    },
+    {
+      "name": "6. Update an Opportunity",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Updated fields reflected in response\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.available_positions).to.eql(5);",
+              "    pm.expect(jsonData.title).to.include(\"(Expanded Lab Scope)\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Autonomous Drone Swarm Coordination in GPS-Denied Tunnels (Expanded Lab Scope)\",\n  \"description\": \"Investigating distributed consensus algorithms, visual-inertial SLAM, and cooperative multi-agent task allocation for subterranean operations with extended testbed deployment.\",\n  \"research_area\": \"Robotics & Autonomous Systems\",\n  \"faculty_name\": \"Dr. Sarah Chen\",\n  \"department\": \"Computer Science & Engineering\",\n  \"required_skills\": \"ROS2, C++, Python, OpenCV, Gazebo, Multi-Agent Systems\",\n  \"available_positions\": 5,\n  \"application_deadline\": \"2026-12-31\",\n  \"status\": \"Open\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/opportunities/{{opportunity_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "opportunities",
+            "{{opportunity_id}}"
+          ]
+        },
+        "description": "Updates details of {{opportunity_id}} (increasing positions from 3 to 5 and appending new skills)."
+      },
+      "response": []
+    },
+    {
+      "name": "7. Change Opportunity from Open to Closed",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Status successfully changed to Closed\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.status).to.eql(\"Closed\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Autonomous Drone Swarm Coordination in GPS-Denied Tunnels (Expanded Lab Scope)\",\n  \"description\": \"Investigating distributed consensus algorithms, visual-inertial SLAM, and cooperative multi-agent task allocation for subterranean operations with extended testbed deployment.\",\n  \"research_area\": \"Robotics & Autonomous Systems\",\n  \"faculty_name\": \"Dr. Sarah Chen\",\n  \"department\": \"Computer Science & Engineering\",\n  \"required_skills\": \"ROS2, C++, Python, OpenCV, Gazebo, Multi-Agent Systems\",\n  \"available_positions\": 5,\n  \"application_deadline\": \"2026-12-31\",\n  \"status\": \"Closed\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/opportunities/{{opportunity_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "opportunities",
+            "{{opportunity_id}}"
+          ]
+        },
+        "description": "Transitions the opportunity status from 'Open' to 'Closed'."
+      },
+      "response": []
+    },
+    {
+      "name": "8. Delete an Opportunity",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Deletion success message returned\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('message');",
+              "    pm.expect(jsonData.message).to.include(\"deleted successfully\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/opportunities/{{opportunity_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "opportunities",
+            "{{opportunity_id}}"
+          ]
+        },
+        "description": "Deletes opportunity {{opportunity_id}} from the database."
+      },
+      "response": []
+    },
+    {
+      "name": "9. Request Deleted Opportunity (Expect 404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404 Not Found\", function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "",
+              "pm.test(\"Error detail indicates opportunity not found\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('detail');",
+              "    pm.expect(jsonData.detail).to.include(\"not found\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/opportunities/{{opportunity_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "opportunities",
+            "{{opportunity_id}}"
+          ]
+        },
+        "description": "Verifies that fetching deleted opportunity {{opportunity_id}} returns HTTP 404 Not Found."
+      },
+      "response": []
+    },
+    {
+      "name": "10. Send Invalid/Missing Data (Expect 400)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 Bad Request\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"Response contains validation error details\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('detail');",
+              "    pm.expect(jsonData.detail).to.include(\"Validation error\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"  \",\n  \"description\": \"Too short\",\n  \"research_area\": \"\",\n  \"faculty_name\": \"\",\n  \"department\": \"\",\n  \"required_skills\": \"\",\n  \"available_positions\": -4,\n  \"application_deadline\": \"invalid-date-format\",\n  \"status\": \"Pending\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/opportunities",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "opportunities"
+          ]
+        },
+        "description": "Verifies that submitting missing, empty, or invalid fields triggers HTTP 400 Bad Request with field validation details."
+      },
+      "response": []
+    }
+  ]
+}

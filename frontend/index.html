@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University Research Opportunity Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation Header -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <span class="brand-icon">🎓</span>
+        <div>
+          <h1 class="brand-title">Research Opportunity Portal</h1>
+          <p class="brand-subtitle">University Faculty & Student Research Opportunities</p>
+        </div>
+      </div>
+      <button id="btn-open-create" class="btn btn-primary">
+        + Post New Opportunity
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-container">
+    <!-- Feedback Alerts / Notification Area -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Filter & Search Controls -->
+    <section class="controls-card">
+      <div class="search-input-wrapper">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search by title, faculty, area, or department..."
+          autocomplete="off"
+        />
+      </div>
+      <div class="filter-wrapper">
+        <label for="status-filter">Filter Status:</label>
+        <select id="status-filter">
+          <option value="ALL">All Statuses</option>
+          <option value="Open">Open</option>
+          <option value="Closed">Closed</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- State Indicators -->
+    <div id="loading-spinner" class="state-message">
+      <div class="spinner"></div>
+      <p>Fetching opportunities from server...</p>
+    </div>
+
+    <div id="empty-state" class="state-message hidden">
+      <div class="state-icon">📋</div>
+      <h3>No Research Opportunities Found</h3>
+      <p>There are currently no listings matching your search or filters.</p>
+    </div>
+
+    <!-- Opportunities Grid Container -->
+    <section id="opportunities-list" class="opportunities-grid">
+      <!-- Populated dynamically via app.js -->
+    </section>
+  </main>
+
+  <!-- Create / Edit Modal -->
+  <div id="form-modal" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="form-modal-title">Post New Research Opportunity</h2>
+        <button type="button" class="btn-close" id="btn-close-form" aria-label="Close">&times;</button>
+      </div>
+      <form id="opportunity-form" novalidate>
+        <input type="hidden" id="field-id" />
+
+        <div class="form-group">
+          <label for="field-title">Title <span class="required">*</span></label>
+          <input type="text" id="field-title" required minlength="3" maxlength="255" placeholder="e.g. Distributed Consensus in Edge Computing" />
+          <span class="validation-msg" id="msg-title"></span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="field-faculty">Faculty Advisor <span class="required">*</span></label>
+            <input type="text" id="field-faculty" required minlength="2" maxlength="150" placeholder="e.g. Dr. Aris Thorne" />
+            <span class="validation-msg" id="msg-faculty"></span>
+          </div>
+          <div class="form-group col-6">
+            <label for="field-department">Department <span class="required">*</span></label>
+            <input type="text" id="field-department" required minlength="2" maxlength="150" placeholder="e.g. Computer Science" />
+            <span class="validation-msg" id="msg-department"></span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="field-area">Research Area <span class="required">*</span></label>
+            <input type="text" id="field-area" required minlength="2" maxlength="150" placeholder="e.g. Distributed Systems" />
+            <span class="validation-msg" id="msg-area"></span>
+          </div>
+          <div class="form-group col-3">
+            <label for="field-positions">Positions <span class="required">*</span></label>
+            <input type="number" id="field-positions" required min="1" max="99" value="1" />
+            <span class="validation-msg" id="msg-positions"></span>
+          </div>
+          <div class="form-group col-3">
+            <label for="field-status">Status <span class="required">*</span></label>
+            <select id="field-status" required>
+              <option value="Open">Open</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="field-deadline">Application Deadline <span class="required">*</span></label>
+          <input type="date" id="field-deadline" required />
+          <span class="validation-msg" id="msg-deadline"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="field-skills">Required Skills & Prerequisites <span class="required">*</span></label>
+          <input type="text" id="field-skills" required minlength="2" placeholder="e.g. Python, Docker, Network Sockets" />
+          <span class="validation-msg" id="msg-skills"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="field-description">Description <span class="required">*</span></label>
+          <textarea id="field-description" rows="4" required minlength="10" placeholder="Describe the research goals, expectations, and role details..."></textarea>
+          <span class="validation-msg" id="msg-description"></span>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-form">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-form">Save Opportunity</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Detail View Modal -->
+  <div id="detail-modal" class="modal-backdrop hidden">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <div>
+          <span id="detail-badge" class="badge"></span>
+          <h2 id="detail-title" class="detail-title"></h2>
+        </div>
+        <button type="button" class="btn-close" id="btn-close-detail" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-meta-grid">
+          <div class="meta-item">
+            <span class="meta-label">Faculty Advisor</span>
+            <span class="meta-value" id="detail-faculty"></span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Department</span>
+            <span class="meta-value" id="detail-department"></span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Research Area</span>
+            <span class="meta-value" id="detail-area"></span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Available Positions</span>
+            <span class="meta-value" id="detail-positions"></span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Deadline</span>
+            <span class="meta-value" id="detail-deadline"></span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Opportunity ID</span>
+            <span class="meta-value" id="detail-id"></span>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h3>Required Skills</h3>
+          <div id="detail-skills" class="skills-tags"></div>
+        </div>
+
+        <div class="detail-section">
+          <h3>Project Description</h3>
+          <p id="detail-description" class="detail-text"></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" id="btn-detail-close-pos">Close Position</button>
+        <button type="button" class="btn btn-secondary" id="btn-detail-edit">Edit</button>
+        <button type="button" class="btn btn-danger" id="btn-detail-delete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="delete-modal" class="modal-backdrop hidden">
+    <div class="modal-box modal-sm">
+      <div class="modal-header">
+        <h2>Confirm Deletion</h2>
+        <button type="button" class="btn-close" id="btn-close-delete" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this research opportunity?</p>
+        <p class="highlight-title"><strong id="delete-target-title"></strong></p>
+        <p class="text-danger small">This action permanently removes the record from the database.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btn-cancel-delete">Cancel</button>
+        <button type="button" class="btn btn-danger" id="btn-confirm-delete">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

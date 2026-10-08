@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: research_portal_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: research_portal
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ppassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: research_portal_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8000
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_NAME: research_portal
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    image: nginx:alpine
+    container_name: research_portal_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
